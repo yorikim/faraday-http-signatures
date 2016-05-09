@@ -1,9 +1,10 @@
 sudo: false
-script:
-  - bundle exec rspec
 language: ruby
 cache: bundler
 before_install: gem install bundler
+script:
+  - bundle exec rspec
+  - bundle exec rubocop
 
 rvm:
   - 1.9.3
@@ -11,5 +12,7 @@ rvm:
   - 2.1
   - 2.2
   - jruby-19mode
+  - jruby-20mode
+  - jruby-21mode
   - jruby-head
-  - rbx-2
+  - rbx
