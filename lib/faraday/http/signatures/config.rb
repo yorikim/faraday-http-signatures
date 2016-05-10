@@ -23,7 +23,7 @@ module Faraday
           end
         end
 
-        options_accessor :digest_header, :digest_algorithm, :signature_header, :signature_algorithm
+        options_accessor :signature_header, :signature_algorithm, :digest_algorithm, :digest_header, :headers
 
         private
 
@@ -31,7 +31,8 @@ module Faraday
           { signature_algorithm: 'RSA-SHA256',
             signature_header:    'Authorization',
             digest_algorithm:    'SHA-256',
-            digest_header:       'Digest'
+            digest_header:       'Digest',
+            headers:             'All headers'
           }
         end
       end

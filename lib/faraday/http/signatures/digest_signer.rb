@@ -1,4 +1,5 @@
 require 'faraday/http/signatures/digest_cipher_factory'
+require 'faraday/http/signatures/signer'
 require 'base64'
 
 module Faraday
@@ -6,13 +7,13 @@ module Faraday
     module Signatures
       class DigestSigner
         def initialize(digest_header, algorithm, env)
-          @digest_header = digest_header
-          @algorithm     = algorithm
-          @env           = env.dup
+          @signature_header = digest_header
+          @algorithm        = algorithm
+          @env              = env.dup
         end
 
         def signed_env
-          @env[:request_headers][@digest_header] = "#{@algorithm}=#{digest_base64}"
+          @env[:request_headers][@signature_header] = "#{@algorithm}=#{digest_base64}"
           @env
         end
 
