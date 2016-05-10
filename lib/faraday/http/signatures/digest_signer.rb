@@ -6,13 +6,14 @@ module Faraday
     module Signatures
       class DigestSigner
         def initialize(digest_header, algorithm, env)
-          @signature_header = digest_header
-          @algorithm        = algorithm
-          @env              = env.dup
+          @digest_header = digest_header
+          @algorithm     = algorithm
+          @env           = env.dup
         end
 
         def signed_env
-          @env[:request_headers][@signature_header] = "#{@algorithm}=#{digest_base64}"
+          print_warn if @env[:request_headers].key?(@digest_header)
+          @env[:request_headers][@digest_header] = "#{@algorithm}=#{digest_base64}"
           @env
         end
 
@@ -28,6 +29,10 @@ module Faraday
 
         def body
           @env[:body] || ''
+        end
+
+        def print_warn
+          warn "WARNING:  Header '#{@digest_header}' is overwritten"
         end
       end
     end

@@ -15,6 +15,7 @@ module Faraday
         end
 
         def signed_env
+          print_warn if @env[:request_headers].key?(@signature_header)
           @env[:request_headers][@signature_header] = authorization_header_value
           @env
         end
@@ -65,6 +66,10 @@ module Faraday
 
         def body
           @env[:body] || ''
+        end
+
+        def print_warn
+          warn "WARNING:  Header '#{@signature_header}' is overwritten"
         end
       end
     end
