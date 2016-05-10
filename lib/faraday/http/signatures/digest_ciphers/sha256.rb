@@ -6,12 +6,10 @@ module Faraday
       module DigestCiphers
         module SHA256
           class << self
-            SHA256 = OpenSSL::Digest::SHA256.new
-
             def encrypt(message)
-              SHA256.reset
-              SHA256 << message
-              SHA256.digest
+              sha256 = OpenSSL::Digest::SHA256.new
+              sha256 << message
+              sha256.digest
             end
           end
         end
