@@ -90,6 +90,21 @@ describe Faraday::Http::Signatures::Signature do
     end
   end
 
+  context 'warningx' do
+    it 'warns about overwrited headers' do
+      expect do
+        conn.post('http://example.com/foo?param=value&pet=dog') do |request|
+          request[:digest]        = 'some digest data'
+          request[:authorization] = 'some authorization data'
+          request[:date]          = request_headers['Date']
+          request[:content_type]  = request_headers['Content-Type']
+          request.body            = body
+        end.to output("WARNING:  Header 'Digest' is overwritten\n" \
+                      "WARNING:  Header 'Authorization' is overwritten\n").to_stderr
+      end
+    end
+  end
+
   def send_request(body, conn = nil)
     conn = connection unless conn
     conn.post('http://example.com/foo?param=value&pet=dog') do |request|
