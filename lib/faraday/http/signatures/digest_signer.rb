@@ -1,5 +1,4 @@
 require 'faraday/http/signatures/digest_cipher_factory'
-require 'faraday/http/signatures/signer'
 require 'base64'
 
 module Faraday
