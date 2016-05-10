@@ -9,8 +9,8 @@ module Faraday
             DIGEST = OpenSSL::Digest::SHA256.new
 
             def encrypt(key, data)
-              private = OpenSSL::PKey::RSA.new(key)
-              private.sign(DIGEST, data)
+              private_key = OpenSSL::PKey::RSA.new(key)
+              private_key.sign(DIGEST, data)
             end
           end
         end
